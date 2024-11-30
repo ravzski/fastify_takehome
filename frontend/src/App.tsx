@@ -1,7 +1,6 @@
 
 
 import { useEffect } from 'react';
-import { Book } from './types/models';
 import { BookForm } from './components/books/BookForm';
 import { BookList } from './components/books/BookList';
 import { AuthorForm } from './components/authors/AuthorForm';
@@ -19,7 +18,7 @@ export default function App(): JSX.Element {
 
   useEffect(() => {
     void run(Promise.all([fetchBooks(), fetchAuthors()]));
-  }, [fetchBooks, fetchAuthors, run]);
+  }, []);
 
   const handleCreateBook = async (data: CreateBookData): Promise<void> => {
     await run(createBook(data));
