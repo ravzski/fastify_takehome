@@ -22,8 +22,8 @@
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd project-root
+   git clone git@github.com:ravzski/fastify_takehome.git
+   cd fastify_takehome
    ```
 
 2. Start Development Environment:
@@ -35,7 +35,7 @@
 - Backend API: http://localhost:3000
 - Frontend App: http://localhost:5173
 
-#### Running Tests
+### Running Tests
 ```bash
 docker-compose exec backend npm run test
 ```
@@ -44,18 +44,13 @@ docker-compose exec backend npm run test
 
 ### Code Organization
 - Domain-Driven Design (DDD) -  Business logic organized in feature modules
+- Each feature (author, book) is a self-contained module
+- This makes it easier to understand and modify functionality.
 - Clear separation of concerns
 - Consistent file naming conventions
 
-### Colocate Related Code
-- Each feature (author, book) is a self-contained module
-- This makes it easier to understand and modify functionality.
-- Each feature folder contains everything needed to understand and modify that feature.
-- Clear separation of concerns between routes, controllers, and services
--
 ### DRY (Don't Repeat Yourself) Principles
 - Common functionality is abstracted into base classes, reducing code duplication
-- Reduces code duplication
 - Makes adding new features faster through inheritance
 
 ### Testing
