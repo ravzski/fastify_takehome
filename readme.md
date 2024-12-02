@@ -3,27 +3,11 @@
 ```
 /project-root
 ├── backend/
-│   ├── src/
-│   │   ├── core/           # Core interfaces, types, and base classes
-│   │   ├── modules/        # Feature modules (domain-driven)
-│   │   ├── plugins/        # Middleware and external integrations
-│   │   └── config/         # Configuration management
-│   ├── prisma/
-│   │   └── schema.prisma   # Database schema
-│   └── tests/              # Integration & E2E tests
-│
+│   ....
 ├── frontend/
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── features/       # Feature-specific logic
-│   │   ├── hooks/         # Custom React hooks
-│   │   ├── services/      # API clients and external services
-│   │   └── utils/         # Utility functions
-│   └── tests/             # Frontend tests
+|   .....
 │
-└── docker/                # Docker configuration files
-    ├── development/
-    └── production/
+└── docker-compose.yml
 ```
 
 ## Getting Started
@@ -59,10 +43,9 @@ docker-compose exec backend npm run test
 ## Architecture Principles
 
 ### Code Organization
-- Feature-based structure
+- Domain-Driven Design (DDD) -  Business logic organized in feature modules
 - Clear separation of concerns
 - Consistent file naming conventions
-- Comprehensive documentation
 
 ### Colocate Related Code
 - Each feature (author, book) is a self-contained module
@@ -74,7 +57,7 @@ docker-compose exec backend npm run test
 - Common functionality is abstracted into base classes, reducing code duplication
 - Reduces code duplication
 - Makes adding new features faster through inheritance
--
+
 ### Testing
 - Clear boundaries make unit testing easier
 - Can mock dependencies cleanly
@@ -89,17 +72,19 @@ docker-compose exec backend npm run test
 ## Possible improvements
 
 ### Testing
-
 - E2E Testing Infrastructure - (Playwright or Cypress)
 - Integration Testing - API integration tests using Supertest
 - Unit Testing - Add property-based testing using fast-check
 
-
-### API Response Caching
+### Backend Optimization
+- Implement rate limiting
+- Implement connection pooling
 - Implement ETags for resource versioning
 - Add cache-control headers
 - Implement stale-while-revalidate strategy
 
-### Backend Optimization
-- Implement rate limiting
-- Implement connection pooling
+### Frontend Optimization
+- Use of Storybooks - for easier atomic testing of UI components
+- Use of state management library (eg. jotai)
+- Zod to validate HTTP responses
+- Use of component library for tailwind to make components (modals, tables etc.) more consistent and easier to implement
