@@ -1,131 +1,105 @@
-## Project Structure
+## 🏗 Project Structure
 
 ```
 /project-root
 ├── backend/
-│   ....
-├── frontend/
-|   .....
+│   ├── src/
+│   │   ├── core/           # Core interfaces, types, and base classes
+│   │   ├── modules/        # Feature modules (domain-driven)
+│   │   ├── plugins/        # Middleware and external integrations
+│   │   └── config/         # Configuration management
+│   ├── prisma/
+│   │   └── schema.prisma   # Database schema
+│   └── tests/              # Integration & E2E tests
 │
-└── docker-compose.yml
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── features/       # Feature-specific logic
+│   │   ├── hooks/         # Custom React hooks
+│   │   ├── services/      # API clients and external services
+│   │   └── utils/         # Utility functions
+│   └── tests/             # Frontend tests
+│
+└── docker/                # Docker configuration files
+    ├── development/
+    └── production/
 ```
 
-## Getting **Started**
+## Getting Started
 
 ### Prerequisites
 
-1. Install Docker
-2. Install Docker Compose
+1. Docker (version 20.10.0 or higher)
+2. Docker Compose (version 2.0.0 or higher)
+3. Node.js (version 20 or higher) for local development
 
-### Running with Docker
+### Development Setup
 
-1. Build and start all services:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd project-root
+   ```
+
+2. Start Development Environment:
    ```bash
    docker-compose up --build
    ```
 
-2. Access your applications:
-   - Backend API: http://localhost:3000
-   - Frontend: http://localhost:5173
+### Access Points
+- Backend API: http://localhost:3000
+- Frontend App: http://localhost:5173
 
-
-# Backend Service
-
-- Source code is in `src/`
-- Database schema in `prisma/schema.prisma`
-- Tests in `src/modules/*/**.test.ts`
-
-## Architecture
-
-```
-src/
-├── core/                 # Core interfaces
-    .....
-│
-├── modules/              # Feature modules
-    ....
-│
-└── plugins/              # Plugins and middlewares
-    ....
+#### Running Tests
+```bash
+docker-compose exec backend npm run test
 ```
 
-### Scalability
-- **Modular Architecture**: Each feature (author, book) is a self-contained module
-- **Clean Architecture**: Clear separation of concerns between routes, controllers, and services
-- **Concern Segregation**: Services are injected into controllers, making the system loosely coupled
-- **Base Classes**: Common functionality is abstracted into base classes, reducing code duplication
+## Architecture Principles
 
-### Maintainability
-- **Consistent Structure**: Each module follows the same pattern:
-  - `*.routes.ts`: Route definitions
-  - `*.controller.ts`: Request handling
-  - `*.service.ts`: Business logic
-  - `*.types.ts`: Type definitions
-  - `*.controller.test.ts`: Tests
-- **Single Responsibility**: Each file has a clear, single purpose
+### Code Organization
+- Feature-based structure
+- Clear separation of concerns
+- Consistent file naming conventions
+- Comprehensive documentation
 
+### Colocate Related Code
+- Each feature (author, book) is a self-contained module
+- This makes it easier to understand and modify functionality.
+- Each feature folder contains everything needed to understand and modify that feature.
+- Clear separation of concerns between routes, controllers, and services
+-
 ### DRY (Don't Repeat Yourself) Principles
-- **Base Classes**: Common CRUD operations in base controller and service
-- **Shared Types**: Common types and interfaces are reused across modules
-- **Utility Functions**: Shared functionality is abstracted into utility functions
+- Common functionality is abstracted into base classes, reducing code duplication
+- Reduces code duplication
+- Makes adding new features faster through inheritance
+-
+### Testing
+- Clear boundaries make unit testing easier
+- Can mock dependencies cleanly
+- Service layer can be tested independently of HTTP concerns
 
-## Getting Started
+### State Management
+- Components are organized by feature in the components directory
+- Shared UI components go in the components/ui directory
+- Each feature should have its own directory with related components
+- Custom hooks in the hooks directory manage feature-specific state
 
-1. Install dependencies:
-```bash
-npm install
-```
+## Possible improvements
 
-2. Set up environment variables:
-```bash
-cp .env.example .env
-```
+### Testing
 
-3. Run database migrations:
-```bash
-npx prisma migrate dev
-```
+- E2E Testing Infrastructure - (Playwright or Cypress)
+- Integration Testing - API integration tests using Supertest
+- Unit Testing - Add property-based testing using fast-check
 
-4. Start development server:
-```bash
-npm run dev
-```
 
-## Testing
+### API Response Caching
+- Implement ETags for resource versioning
+- Add cache-control headers
+- Implement stale-while-revalidate strategy
 
-Run all tests:
-```bash
-npm run test
-```
-
-## Development Guidelines
-
-1. **Adding a New Feature**
-   - Create a new module directory under `src/modules`
-   - Implement controller, service, routes, and types
-   - Add tests
-   - Register routes in main application
-
-2. **Error Handling**
-   - Use the base controller's error handling methods
-   - Create specific error types when needed
-   - Always return consistent error responses
-
-3. **Database Operations**
-   - Keep database queries in service layer
-   - Use Prisma transactions when needed
-   - Validate data before database operations
-****
-4. **Testing**
-   - Write tests for all new endpoints
-   - Mock external dependencies
-   - Test error cases
-   - Maintain test coverage
-
-## Performance Considerations
-
-- Connection pooling with Prisma
-- Request validation using Fastify schemas
-- Proper error handling and logging
-- Database query optimization
-- Rate limiting on sensitive endpoints
+### Backend Optimization
+- Implement rate limiting
+- Implement connection pooling
